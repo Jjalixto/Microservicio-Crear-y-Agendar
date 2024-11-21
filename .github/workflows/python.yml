@@ -26,20 +26,12 @@ jobs:
           echo "TENANT_ID=${{ secrets.TENANT_ID }}" >> $GITHUB_ENV
           echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> $GITHUB_ENV
           echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" >> $GITHUB_ENV
-    # Paso 2: Obtener el código del repositorio
-    - name: Checkout code
-      uses: actions/checkout@v2
 
     # # Paso 3: Construir la imagen Docker en el servidor
     - name: Build Docker image on server
       run: |
-        # Verificar si el contenedor existe
-        if [ "$(docker ps -a -q -f name=my-python-app)" ]; then
-          docker stop my-python-app || true
-          docker rm my-python-app || true
-        fi
-        # Construir la imagen Docker
-        cd /home/microservicio/Microservicio-Crear-y-Agendar && docker-compose up -d
+        cd /home/microservicio/Microservicio-Crear-y-Agendar
+        docker-compose up -d
 
 
     # # Paso 4: Instalar dependencias de Python (solo si las necesitas en el contenedor)
