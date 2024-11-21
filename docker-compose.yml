@@ -2,12 +2,14 @@ version: "3.9"
 
 services:
   app:
-    build: .  # Esto le indica a Docker Compose que construya la imagen desde el Dockerfile en el directorio actual
+    image: python:3.12-slim  # Usa la imagen oficial de Python 3.12 directamente
     ports:
       - "9000:9000"  # Expone el puerto 9000 de tu aplicación para acceso externo
     environment:
       - PYTHONUNBUFFERED=1  # Evita que los logs sean almacenados en buffers
     volumes:
       - .:/app  # Monta el directorio actual en el contenedor, así los cambios en el código se reflejan inmediatamente
+    working_dir: /app  # Establece el directorio de trabajo dentro del contenedor
     command: uvicorn main:app --host 0.0.0.0 --port 9000 --reload  # Comando para ejecutar FastAPI con Uvicorn
-  
+    # Instalación de dependencias en el contenedor
+    # entrypoint: /bin/bash -c "pip install --no-cache-dir -r /app/requirements.txt && uvicorn main:app --host 0.0.0.0 --port 9000 --reload"
