@@ -1,5 +1,5 @@
 fastapi==0.95.1
 uvicorn==0.22.0
 httpx==0.24.0
-pydantic==2.6.1
+pydantic
 python-dotenv==1.0.0
