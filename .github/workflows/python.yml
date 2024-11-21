@@ -1,0 +1,53 @@
+name: Deploy Python 3.12 Application
+
+on:
+  push:
+    branches:
+      - main  # Despliegue en la rama principal (ajusta si es necesario)
+  pull_request:
+    branches:
+      - main  # Ejecutar en solicitudes de extracción hacia la rama principal
+
+jobs:
+  deploy:
+    name: Build
+    runs-on: ubuntu-latest  # Usar una máquina de Ubuntu para ejecutar el trabajo
+
+    steps:
+    # Paso 1: Conectarse por SSH al servidor para ejecutar los comandos
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@v1.2.0
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.NAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: whoami
+
+    - name: Set up environment variables
+      run: |
+          echo "TENANT_ID=${{ secrets.TENANT_ID }}" >> $GITHUB_ENV
+          echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> $GITHUB_ENV
+          echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" >> $GITHUB_ENV
+    # Paso 2: Obtener el código del repositorio
+    # - name: Checkout code
+    #   uses: actions/checkout@v2
+
+    # # Paso 3: Construir la imagen Docker en el servidor
+    # - name: Build Docker image on server
+    #   run: 
+    #     "cd /home/microservicio-python && \
+    #       docker build -t my-python-app"
+
+    # # Paso 4: Instalar dependencias de Python (solo si las necesitas en el contenedor)
+    # - name: Install Python dependencies on server
+    #   run: |
+    #     "docker exec my-python-app pip install -r /app/requirements.txt"
+
+    # # Paso 5: Correr el contenedor con FastAPI (usando Uvicorn)
+    # - name: Run Docker container with FastAPI
+    #   run: |
+    #     "docker stop my-python-app || true && \
+    #       docker rm my-python-app || true && \
+    #       docker run -d --name my-python-app -p 9000:9000 my-python-app && \
+    #       docker exec -d my-python-app uvicorn main:app --host 0.0.0.0 --port 9000"

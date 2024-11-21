@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  app:
+    build: .  # Esto le indica a Docker Compose que construya la imagen desde el Dockerfile en el directorio actual
+    ports:
+      - "9000:9000"  # Expone el puerto 9000 de tu aplicación para acceso externo
+    environment:
+      - PYTHONUNBUFFERED=1  # Evita que los logs sean almacenados en buffers
+    volumes:
+      - .:/app  # Monta el directorio actual en el contenedor, así los cambios en el código se reflejan inmediatamente
+    command: uvicorn main:app --host 0.0.0.0 --port 9000 --reload  # Comando para ejecutar FastAPI con Uvicorn
+  
