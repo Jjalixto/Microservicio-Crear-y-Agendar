@@ -19,7 +19,7 @@ jobs:
         script: |
           cd /home/microservicio
           git clone https://github.com/Jjalixto/Microservicio-Crear-y-Agendar.git
-          
+          cd Microservicio-Crear-y-Agendar
 
     - name: Set up environment variables
       run: |
