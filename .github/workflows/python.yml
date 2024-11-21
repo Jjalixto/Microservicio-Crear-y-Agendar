@@ -1,12 +1,6 @@
 name: Deploy Python 3.12 Application
 
-on:
-  push:
-    branches:
-      - main  # Despliegue en la rama principal (ajusta si es necesario)
-  pull_request:
-    branches:
-      - main  # Ejecutar en solicitudes de extracción hacia la rama principal
+on: [push]
 
 jobs:
   deploy:
