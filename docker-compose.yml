@@ -4,8 +4,6 @@ services:
   app:
     image: python:3.12-slim  # Usa una imagen de Python
     container_name: my-python-app
-    ports:
-      - "9000:9000"
     volumes:
       - .:/app  # Mapea el código fuente del host al contenedor
     working_dir: /app  # Establece el directorio de trabajo
