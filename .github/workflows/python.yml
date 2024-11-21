@@ -39,7 +39,7 @@ jobs:
           docker rm my-python-app || true
         fi
         # Construir la imagen Docker
-        cd /home/microservicio/Microservicio-Crear-y-Agendar && docker-compose up --build
+        cd /home/microservicio/Microservicio-Crear-y-Agendar && docker-compose up -d
 
 
     # # Paso 4: Instalar dependencias de Python (solo si las necesitas en el contenedor)
