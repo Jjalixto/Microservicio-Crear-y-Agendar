@@ -29,11 +29,15 @@ jobs:
 
     # # Paso 3: Construir la imagen Docker en el servidor
     - name: Build Docker image on server
-      run: 
-        docker stop my-python-app || true && \
-          docker rm my-python-app || true && \
-        "cd /home/microservicio-python && \
-          docker build -t my-python-app"
+      run: |
+        # Verificar si el contenedor existe
+        if [ "$(docker ps -a -q -f name=my-python-app)" ]; then
+          docker stop my-python-app || true
+          docker rm my-python-app || true
+        fi
+        # Construir la imagen Docker
+        cd /home/microservicio-python && docker build -t my-python-app .
+
 
     # # Paso 4: Instalar dependencias de Python (solo si las necesitas en el contenedor)
     - name: Install Python dependencies on server
