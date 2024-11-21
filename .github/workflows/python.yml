@@ -16,7 +16,10 @@ jobs:
         username: ${{ secrets.NAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-        script: whoami
+        script: |
+          cd /home/microservicio
+          git clone https://github.com/tu_usuario/tu_repositorio.git microservicio
+          
 
     - name: Set up environment variables
       run: |
@@ -29,7 +32,13 @@ jobs:
 
     # # Paso 3: Construir la imagen Docker en el servidor
     - name: Build Docker image on server
-      run: 
+      run: |
+        # Verificar si el contenedor existe
+        if [ "$(docker ps -a -q -f name=my-python-app)" ]; then
+          docker stop my-python-app || true
+          docker rm my-python-app || true
+        fi
+        # Construir la imagen Docker
         cd /home/microservicio && docker build -t my-python-app .
 
 
