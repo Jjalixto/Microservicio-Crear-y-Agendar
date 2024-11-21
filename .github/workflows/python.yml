@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   deploy:
-    name: Build
+    name: Build-P
     runs-on: ubuntu-latest  # Usar una máquina de Ubuntu para ejecutar el trabajo
 
     steps:
