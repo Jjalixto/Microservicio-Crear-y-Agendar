@@ -4,44 +4,26 @@ on: [push]
 
 jobs:
   deploy:
-    name: Build
-    runs-on: ubuntu-latest  # Usar una máquina de Ubuntu para ejecutar el trabajo
+    name: Build and Deploy
+    runs-on: ubuntu-latest
 
     steps:
-    # Paso 1: Conectarse por SSH al servidor para ejecutar los comandos
-    - name: executing remote ssh commands using password
-      uses: appleboy/ssh-action@v1.2.0
+    # Paso 1: Conexión al servidor por SSH
+    - name: SSH into the server
+      uses: appleboy/ssh-action@v0.1.9
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.NAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         script: |
+          # Clonar o actualizar el repositorio
           cd /home/microservicio
           git clone https://github.com/Jjalixto/Microservicio-Crear-y-Agendar.git
-          cd Microservicio-Crear-y-Agendar
+          
+          # Construir y levantar contenedor con Docker Compose
+          docker-compose down  # Detener cualquier instancia previa
+          docker-compose up -d --build
 
-    - name: Set up environment variables
-      run: |
-          echo "TENANT_ID=${{ secrets.TENANT_ID }}" >> $GITHUB_ENV
-          echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> $GITHUB_ENV
-          echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" >> $GITHUB_ENV
-
-    # # Paso 3: Construir la imagen Docker en el servidor
-    - name: Build Docker image on server
-      run: |
-        cd /home/microservicio/Microservicio-Crear-y-Agendar
-        docker-compose up -d
-
-
-    # # Paso 4: Instalar dependencias de Python (solo si las necesitas en el contenedor)
-    - name: Install Python dependencies on server
-      run: |
-        "docker exec my-python-app pip install -r /app/requirements.txt"
-
-    # # Paso 5: Correr el contenedor con FastAPI (usando Uvicorn)
-    - name: Run Docker container with FastAPI
-      run: |
-        "
-          docker run -d --name my-python-app -p 9000:9000 my-python-app && \
-          docker exec -d my-python-app uvicorn main:app --host 0.0.0.0 --port 9000"
+          # Verificar si el contenedor se está ejecutando
+          docker ps
