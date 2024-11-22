@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   deploy:
-    name: Build and Deployment
+    name: Build and Deploy
     runs-on: ubuntu-latest
 
     steps:
@@ -23,8 +23,8 @@ jobs:
           
           # Construir y levantar contenedor con Docker Compose
           cd /home/microservicio/Microservicio-Crear-y-Agendar
-          python3.12 -m venv myenv
-          source myenv/bin/activate
-          python3.12 -m pip install -r requirements.txt
-          python3.12 -m uvicorn main:app --reload --host 127.0.0.1 --port 9000
+          docker-compose up -d
+
+          # Verificar si el contenedor se está ejecutando
+          docker ps
 
