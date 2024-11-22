@@ -27,3 +27,5 @@ jobs:
 
           # Verificar si el contenedor se está ejecutando
           docker ps
+
+          docker logs my-python-app
