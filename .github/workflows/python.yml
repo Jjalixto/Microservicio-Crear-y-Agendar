@@ -22,8 +22,8 @@ jobs:
           git clone https://github.com/Jjalixto/Microservicio-Crear-y-Agendar.git
           
           # Construir y levantar contenedor con Docker Compose
-          docker-compose down  # Detener cualquier instancia previa
-          docker-compose up -d --build
+          cd /home/microservicio/Microservicio-Crear-y-Agendar
+          docker-compose up -d
 
           # Verificar si el contenedor se está ejecutando
           docker ps

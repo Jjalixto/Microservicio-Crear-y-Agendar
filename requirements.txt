@@ -3,9 +3,3 @@ uvicorn==0.22.0
 httpx==0.24.0
 pydantic
 python-dotenv==1.0.0
-
- - name: Set up environment variables
-      run: |
-          echo "TENANT_ID=${{ secrets.TENANT_ID }}" >> $GITHUB_ENV
-          echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> $GITHUB_ENV
-          echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" >> $GITHUB_ENV

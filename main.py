@@ -45,6 +45,10 @@ class MeetingData(BaseModel):
     end: datetime
     attendees: list[Attendee]
 
+@app.get("/")
+def read_root():
+    return {"Hello": "World"}
+
 # Endpoint para redirigir a la página de autenticación de Microsoft
 @app.get("/auth")
 async def auth():
