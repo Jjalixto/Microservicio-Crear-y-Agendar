@@ -7,8 +7,7 @@ services:
     volumes:
       - .:/app  # Mapea el código fuente del host al contenedor
     working_dir: /app  # Establece el directorio de trabajo
-    ports:
-      - "127.0.0.1:9000:9000"  # Expone el puerto solo a la interfaz local
+    network_mode: "host"  # Utiliza la red del host directamente
     environment:
       - PYTHONUNBUFFERED=1  # Evita el almacenamiento en búfer de salida de Python
     entrypoint: |
