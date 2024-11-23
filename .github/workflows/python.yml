@@ -17,6 +17,10 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         script: |
+
+          echo "TENANT_ID=${{ secrets.TENANT_ID }}" > /home/microservicio/.env
+          echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> /home/microservicio/.env
+          echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" >> /home/microservicio/.env
           # Clonar o actualizar el repositorio
           cd /home/microservicio
           git clone https://github.com/Jjalixto/Microservicio-Crear-y-Agendar.git
