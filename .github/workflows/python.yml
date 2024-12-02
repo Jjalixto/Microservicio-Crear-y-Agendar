@@ -17,77 +17,26 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         script: |
-          echo "Conectando al servidor..."
-
-    # Paso 2: Detener y eliminar el contenedor si está corriendo
-    - name: Detener y eliminar contenedor 'app-authentication'
-      uses: appleboy/ssh-action@v0.1.9
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.NAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT }}
-        script: |
           # Verificar si el contenedor 'app-authentication' está corriendo y detenerlo si es necesario
           if docker ps -q -f name=app-authentication; then
             echo "Deteniendo el contenedor app-authentication..."
             docker stop app-authentication
             docker rm app-authentication
-          else
-            echo "Contenedor 'app-authentication' no está corriendo."
           fi
 
-    # Paso 3: Verificar y eliminar el directorio del repositorio si existe
-    - name: Eliminar repositorio si existe
-      uses: appleboy/ssh-action@v0.1.9
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.NAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT }}
-        script: |
           # Verificar si el directorio /home/microservicio/Microservicio-Crear-y-Agendar existe
           if [ -d "/home/microservicio/Microservicio-Crear-y-Agendar" ]; then
             echo "Eliminando el repositorio existente..."
             rm -rf /home/microservicio/Microservicio-Crear-y-Agendar
-          else
-            echo "El repositorio no existe, no es necesario eliminarlo."
           fi
 
-    # Paso 4: Clonar el repositorio desde GitHub
-    - name: Clonar repositorio desde GitHub
-      uses: appleboy/ssh-action@v0.1.9
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.NAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT }}
-        script: |
-          echo "Clonando el repositorio..."
+          # Clonar o actualizar el repositorio
           cd /home/microservicio 
           git clone https://github.com/Jjalixto/Microservicio-Crear-y-Agendar.git
-
-    # Paso 5: Construir y levantar el contenedor con Docker Compose
-    - name: Construir y levantar contenedor con Docker Compose
-      uses: appleboy/ssh-action@v0.1.9
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.NAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT }}
-        script: |
-          echo "Construyendo y levantando contenedor con Docker Compose..."
+          
+          # Construir y levantar contenedor con Docker Compose
           cd /home/microservicio/Microservicio-Crear-y-Agendar
           docker-compose up -d
 
-    # Paso 6: Verificar si el contenedor está en ejecución
-    - name: Verificar contenedores en ejecución
-      uses: appleboy/ssh-action@v0.1.9
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.NAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT }}
-        script: |
-          echo "Verificando contenedores en ejecución..."
+          # Verificar si el contenedor se está ejecutando
           docker ps
