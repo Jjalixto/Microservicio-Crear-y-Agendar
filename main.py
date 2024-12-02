@@ -29,7 +29,7 @@ CLIENT_ID = secrets["CLIENT_ID"]
 CLIENT_SECRET = secrets["CLIENT_SECRET"]
 AUTH_URL = f"https://login.microsoftonline.com/{TENANT_ID}/oauth2/v2.0/authorize"
 TOKEN_URL = f"https://login.microsoftonline.com/{TENANT_ID}/oauth2/v2.0/token"
-REDIRECT_URI = "https://58a7-209-59-156-116.ngrok-free.app/auth/callback"
+REDIRECT_URI = "https://31f4-209-59-156-116.ngrok-free.app/auth/callback"
 SCOPES = "https://graph.microsoft.com/Calendars.ReadWrite openid profile offline_access"
 
 # Variables para almacenar tokens
