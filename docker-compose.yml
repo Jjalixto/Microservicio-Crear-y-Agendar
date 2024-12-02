@@ -5,7 +5,7 @@ services:
     image: python:3.12-slim  # Usa una imagen base de Python
     container_name: app-authentication
     volumes:
-      - .:/app  # Mapea el código fuente del host al contenedor
+      - /home/microservicio/secrets.txt:/app/secrets.txt  # Mapea el código fuente del host al contenedor
     working_dir: /app  # Establece el directorio de trabajo
     network_mode: "host"  # Utiliza la red del host directamente
     environment:
