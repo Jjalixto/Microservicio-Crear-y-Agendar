@@ -12,6 +12,8 @@ services:
       - PYTHONUNBUFFERED=1  # Evita el almacenamiento en búfer de salida de Python
     entrypoint: |
       /bin/bash -c "
-      pip install --upgrade pip &&
-      pip install --no-cache-dir -r requirements.txt &&
-      uvicorn main:app --host 0.0.0.0 --port 9000"
+      python -m venv /app/venv &&  # Crea un entorno virtual
+      source /app/venv/bin/activate &&  # Activa el entorno virtual
+      pip install --upgrade pip && # Actualiza pip
+      pip install --no-cache-dir -r requirements.txt && # Instala las dependencias
+      uvicorn main:app --host 0.0.0.0 --port 9000"  # Inicia la aplicación con uvicorn
