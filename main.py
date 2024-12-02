@@ -7,10 +7,26 @@ import time
 import os
 from datetime import datetime
 
+file_path = "/home/microservicio/secrets.txt"
+
+# Función para cargar secretos desde el archivo .txt
+def load_secrets(file_path):
+    secrets = {}
+    with open(file_path, "r") as file:
+        for line in file:
+            # Omitir líneas vacías o comentarios
+            if line.strip() and not line.startswith("#"):
+                key, value = line.strip().split("=", 1)
+                secrets[key] = value
+    return secrets
+
+# Cargar los secretos
+secrets = load_secrets(file_path)
+
 # Configuración
-TENANT_ID = os.getenv("TENANT_ID")
-CLIENT_ID = os.getenv("CLIENT_ID")
-CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+TENANT_ID = secrets["TENANT_ID"]
+CLIENT_ID = secrets["CLIENT_ID"]
+CLIENT_SECRET = secrets["CLIENT_SECRET"]
 AUTH_URL = f"https://login.microsoftonline.com/{TENANT_ID}/oauth2/v2.0/authorize"
 TOKEN_URL = f"https://login.microsoftonline.com/{TENANT_ID}/oauth2/v2.0/token"
 REDIRECT_URI = "https://58a7-209-59-156-116.ngrok-free.app/auth/callback"
