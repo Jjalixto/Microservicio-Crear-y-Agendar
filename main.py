@@ -7,7 +7,7 @@ import time
 import os
 from datetime import datetime
 
-file_path = "/home/microservicio/secrets.txt"
+file_path = "/app/secrets.txt"
 
 # Función para cargar secretos desde el archivo .txt
 def load_secrets(file_path):
