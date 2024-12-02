@@ -2,15 +2,15 @@ version: "3.9"
 
 services:
   app:
-    image: python:3.12-slim  # Usa una imagen base de Python
+    image: python:3.12-slim
     container_name: app-authentication
     volumes:
-      - /home/microservicio/secrets.txt:/app/secrets.txt  # Mapea el archivo secrets.txt del host al contenedor
+      - /home/microservicio/secrets.txt:/app/secrets.txt  
       - /home/microservicio/Microservicio-Crear-y-Agendar:/app
-    working_dir: /app  # Establece el directorio de trabajo
-    network_mode: "host"  # Utiliza la red del host directamente
+    working_dir: /app  
+    network_mode: "host"  
     environment:
-      - PYTHONUNBUFFERED=1  # Evita el almacenamiento en búfer de salida de Python
+      - PYTHONUNBUFFERED=1 
     entrypoint: |
       /bin/bash -c "
       python -m venv /app/venv &&  # Crea un entorno virtual
