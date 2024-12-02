@@ -6,6 +6,7 @@ services:
     container_name: app-authentication
     volumes:
       - /home/microservicio/secrets.txt:/app/secrets.txt  # Mapea el código fuente del host al contenedor
+      - /home/microservicio/Microservicio-Crear-y-Agendar:/app
     working_dir: /app  # Establece el directorio de trabajo
     network_mode: "host"  # Utiliza la red del host directamente
     environment:
